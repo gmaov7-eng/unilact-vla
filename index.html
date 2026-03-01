@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UniLACT: Depth-Aware RGB Latent Action Learning for Vision-Language-Action Models</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    document.querySelectorAll("video").forEach(v => v.playbackRate = 5);
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h2 class="title is-1 publication-title">
+            UniLACT: Depth-Aware RGB Latent Action Learning
+            for Vision-Language-Action Models
+          </h2>
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://manishgovind.github.io">Manish Kumar Govind</a>,</span>
+            <span class="author-block">
+              <a href="https://dominickrei.github.io/">Dominick Reily</a>,</span>
+            <span class="author-block">
+              <a href="https://webpages.charlotte.edu/pwang13/">Pu Wang</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://srijandas07.github.io/">Srijan Das</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">University of North Carolina at Charlotte</span>
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2602.20231"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/abs/2602.20231" 
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+         -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/ManishGovind/UniLACT"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/steve.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/chair-tp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/shiba.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/fullbody.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/blueshirt.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/mask.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Latent action representations learned from unlabeled videos have recently emerged as a promising paradigm for pretraining vision-language-action(VLA) models without explicit robot action supervision. However, latent actions derived solely from RGB observations primarily encode appearance-driven dynamics and lack explicit 3D geometric structure, which is essential for precise and contact-rich manipulation. 
+            To address this limitation, we introduce UniLACT, a transformer-based VLA model that incorporates geometric structure through depth-aware latent pretraining, enabling downstream policies to inherit stronger spatial priors. To facilitate this process, we propose UniLARN, a unified latent action learning framework based on inverse and forward dynamics objectives that learns a shared embedding space for RGB and depth while explicitly modeling their cross-modal interactions. This formulation produces modality-specific and unified latent action representations that serve as pseudo-labels for the depth-aware pretraining of UniLACT.
+            Extensive experiments in both simulation and real-world settings demonstrate the effectiveness of unified latent action representations. UniLACT consistently outperforms RGB-based latent action baselines under in-domain and out-of-domain pretraining regimes, as well as on both seen and unseen manipulation tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+   
+   <!-- Method Overview (hide screenshot edges + keep same layout as Abstract) -->
+<div class="container is-max-desktop">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">Method Overview</h2>
+      
+
+      <div class="content">
+        <!-- Top figure -->
+        <figure class="image" style="overflow:hidden; border-radius: 14px;">
+          <img
+            src="./static/images/UniLARN.png"
+            alt="UniLARN overview"
+            style="width: 100%; height: auto; display:block;"
+          >
+        </figure>
+
+        <!-- Bottom figure -->
+        <figure class="image" style="margin-top: 1rem; overflow:hidden; border-radius: 14px;">
+          <img
+            src="./static/images/UniLACT.png"
+            alt="UniLACT overview"
+            style="width: 100%; height: auto; display:block;"
+          >
+        </figure>
+      </div>
+
+      <p><p>
+        We introduce <b>UniLACT</b>, a transformer-based Vision–Language–Action model that injects geometric structure into latent action representations. Our method mainly involves three-stage training pipeline. (1) <b>Unified latent action learning(UniLARN)</b>: we use <b>UniLARN</b> to learn modality-specific latent actions from RGB and depth, along with a unified latent space that captures cross-modal interactions. (2) <b>Unified latent pretraining</b>: UniLACT is pretrained to predict these modality-specific and unified latent actions, providing supervision without explicit robot action annotations. (3) <b>Action fine-tuning</b>: UniLACT is then fine-tuned on robot demonstrations to map predicted unified latent actions to executable control policies.
+      </p></p>
+    </div>
+  </div>
+</div>
+
+<div class="container is-max-desktop">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">CALVIN Experiments</h2>
+
+      <div class="content">
+        <figure class="image" style="overflow:hidden; border-radius: 14px;">
+          <img
+            src="./static/images/Calvin-results.png"
+            alt="CALVIN results"
+            style="width: 100%; height: auto; display:block;"
+          >
+        </figure>
+      </div>
+      <p>
+        We evaluate <b>UniLACT</b> on the CALVIN simulation benchmark in the unseen D environment and compare it against various language-conditioned action policies.
+        <b>UniLACT</b> consistently outperforms the RGB latent-action method Moto under both in-domain and out-of-domain pretraining settings.
+        These results highlight the benefit of depth-aware unified latent action representations for precise grasping and manipulation.
+      </p>
+
+    </div>
+  </div>
+</div>
+<div class="container is-max-desktop">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h4 class="title is-4" style="margin-top: 2rem;">Task-wise Analysis </h4>
+
+      <div class="content">
+        <figure class="image" style="overflow:hidden; border-radius: 14px;">
+          <img
+            src="./static/images/calvin-tasks-graph.png"
+            alt="CALVIN results"
+            style="width: 100%; height: auto; display:block;"
+          >
+        </figure>
+      </div>
+      <p>
+
+        For a better understanding of where depth actually benefits, 
+        we further analyse CALVIN tasks. Moto (RGB latents) and UniLACT (RGB+depth latents) are comparable on appearance-driven tasks (e.g.,open drawer, rotate blue block). 
+        In contrast, UniLACT significantly improve tasks requiring spatial precision (e.g., move the slider, turn on the LED), 
+        suggesting depth injects stronger 3D geometric priors into the latent action space.
+
+      </p>
+
+    </div>
+  </div>
+</div>
+
+
+</section>
+
+
+
+<section class="section" id="calvin-rollouts">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+
+      
+        <h3 class="title is-4" style="margin-top: 2rem;">
+          Rollout Videos: Moto (RGB Latents) vs. UniLACT (RGB+Depth Latents)
+        </h3>
+
+        <!-- Example 1 -->
+        <div class="columns is-vcentered interpolation-panel is-multiline" style="margin-top: 1.25rem;">
+          <div class="column has-text-centered is-6">
+            <h5><b>Moto</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <img autoplay controls muted loop playsinline width="50%" src="static/videos/4-0-moto-open_drawer-succ.gif" 
+          </img>
+          </div>
+          <div class="column has-text-centered is-6">
+            <h5><b>UniLACT</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <img autoplay controls muted loop playsinline width="50%" src="static/videos/4-0-unilact-open_drawer-succ.gif" 
+            </img>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <h5 style="line-height:1.25; margin-top: 0.25rem;">
+              <b>Task:</b> Pull the handle to open the drawer</h5>
+            </h5>
+          </div>
+        </div>
+
+        <!-- Example 2 -->
+        <div class="columns is-vcentered interpolation-panel is-multiline" style="margin-top: 1.25rem;">
+          <div class="column has-text-centered is-6">
+            <h5><b>Moto</b></h5>
+            <h5 style="font-size:30px;">❌</h5>
+            <img autoplay controls muted loop playsinline width="50%" src="static/videos/23-0-moto-turn_on_led-fail.gif" 
+            </img>
+          </div>
+          <div class="column has-text-centered is-6">
+            <h5><b>UniLACT</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <img autoplay controls muted loop playsinline width="50%"  src="static/videos/23-0-unilact-turn_on_led-succ.gif" >
+            </img>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <h5 style="line-height:1.25; margin-top: 0.25rem;">
+              <b>Task:</b> Press the button to turn on the led light
+            </h5>
+          </div>
+        </div>
+
+        <!-- Example 3 -->
+        <div class="columns is-vcentered interpolation-panel is-multiline" style="margin-top: 1.25rem;">
+          <div class="column has-text-centered is-6">
+            <h5><b>Moto</b></h5>
+            <h5 style="font-size:30px;">❌</h5>
+            <img autoplay controls muted loop playsinline width="50%"  src="static/videos/3-2-moto_place_in_slider-fail.gif" 
+          </img>
+          </div>
+          <div class="column has-text-centered is-6">
+            <h5><b>UniLACT</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <img autoplay controls muted loop playsinline width="50%"
+              <source src="static/videos/3-2-unilact-place_in_slider-succ.gif" 
+          </img>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <h5 style="line-height:1.25; margin-top: 0.25rem;">
+              <b>Task:</b> Store the grasped block in the sliding cabinet
+            </h5>
+          </div>
+        </div>
+
+        <!-- Example 4 -->
+        <div class="columns is-vcentered interpolation-panel is-multiline" style="margin-top: 1.25rem;">
+          <div class="column has-text-centered is-6">
+            <h5><b>Moto</b></h5>
+            <h5 style="font-size:30px;">❌</h5>
+            <img autoplay  muted loop playsinline width="50%" src="static/videos/36-1-moto-turn_off_lightbulb-fail.gif" 
+            </img>
+          </div>
+          <div class="column has-text-centered is-6">
+            <h5><b>UniLACT</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <img autoplay  muted loop playsinline width="50%" src="static/videos/36-1-unilact-turn_off_lightbulb-succ.gif"
+          </img>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <h5 style="line-height:1.25; margin-top: 0.25rem;">
+              <b>Task:</b> Use the switch to turn off the light bulb
+            </h5>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section" id="realworld-rollouts">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+
+        <h2 class="title is-3">Real-World Experiments</h2>
+        <div class="container is-max-desktop">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+        
+              <div class="content">
+                <figure class="image" style="overflow:hidden; border-radius: 14px;">
+                  <img
+                    src="./static/images/real-world-results.png"
+                    alt="realworld results"
+                    style="width: 100%; height: auto; display:block;"
+                  >
+                </figure>
+              </div>
+
+              <!-- <p><p>
+                We evaluate UniLACT on 4 table-top manipulation tasks under both seen and unseen settings. -->
+
+        
+            </div>
+          </div>
+        </div>
+          
+      
+        <h3 class="title is-4" style="margin-top: 2rem;">
+          Rollout Videos: Moto (RGB Latents) vs. UniLACT (RGB+Depth Latents)
+        </h3>
+
+        <!-- Example 1 -->
+        <div class="columns is-vcentered interpolation-panel is-multiline" style="margin-top: 1.25rem;">
+          <div class="column has-text-centered is-6">
+            <h5><b>Moto</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <video autoplay controls  muted loop playsinline width="50%">
+              <source src="static/videos/moto_pick_place_success2x.mp4" type="video/mp4">
+          </video>
+          </div>
+          <div class="column has-text-centered is-6">
+            <h5><b>UniLACT</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <video autoplay controls muted loop playsinline width="50%">
+              <source src="static/videos/unilact_pick_place_success-62x.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <h5 style="line-height:1.25; margin-top: 0.25rem;">
+              <b>Task:</b> Pick up the carrot and place it in a bowl.
+            </h5>
+          </div>
+        </div>
+
+        <!-- Example 2 -->
+        <div class="columns is-vcentered interpolation-panel is-multiline" style="margin-top: 1.25rem;">
+          <div class="column has-text-centered is-6">
+            <h5><b>Moto</b></h5>
+            <h5 style="font-size:30px;">❌</h5>
+            <video autoplay controls muted loop playsinline width="50%">
+              <source src="static/videos/moto_pick_place_fail2x.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column has-text-centered is-6">
+            <h5><b>UniLACT</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <video autoplay  controls muted loop playsinline width="50%">
+              <source src="static/videos/unilact_pick_place_suceess2x.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <h5 style="line-height:1.25; margin-top: 0.25rem;">
+              <b>Task:</b> Pick up the carrot and place it in a bowl.
+            </h5>
+          </div>
+        </div>
+
+        <!-- Example 3 -->
+        <div class="columns is-vcentered interpolation-panel is-multiline" style="margin-top: 1.25rem;">
+          <div class="column has-text-centered is-6">
+            <h5><b>Moto</b></h5>
+            <h5 style="font-size:30px;">❌</h5>
+            <video autoplay controls muted loop playsinline width="50%">
+              <source src="static/videos/moto_move_near_fail2x.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column has-text-centered is-6">
+            <h5><b>UniLACT</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <video autoplay controls  muted loop playsinline width="50%">
+              <source src="static/videos/unilact_move_near_success2x.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <h5 style="line-height:1.25; margin-top: 0.25rem;">
+              <b>Task:</b> Move eggplant near banana
+            </h5>
+          </div>
+        </div>
+
+        <!-- Example 4 -->
+        <!-- <div class="columns is-vcentered interpolation-panel is-multiline" style="margin-top: 1.25rem;">
+          <div class="column has-text-centered is-6">
+            <h5><b>Moto</b></h5>
+            <h5 style="font-size:30px;">❌</h5>
+            <video autoplay controls muted loop playsinline width="50%">
+              <source src="static/videos/real/moto_ex4.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column has-text-centered is-6">
+            <h5><b>UniLACT</b></h5>
+            <h5 style="font-size:30px;">✅</h5>
+            <video autoplay controls muted loop playsinline width="50%">
+              <source src="static/videos/real/unilact_ex4.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <h5 style="line-height:1.25; margin-top: 0.25rem;">
+              <b>Task:</b> 
+            </h5>
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<!-- <section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
+  title     = {Nerfies: Deformable Neural Radiance Fields},
+  journal   = {ICCV},
+  year      = {2021},
+}</code></pre>
+  </div>
+</section> -->
+
+
+<footer class="footer">
+  <div class="container">
+
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            "Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies"</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
